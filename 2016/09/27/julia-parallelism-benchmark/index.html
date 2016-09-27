@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Julia parallelism benchmarking &middot; Steinhagelvoll Blog
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/lanyon.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>Here I discuss scientific programming and all things related: Fortran, Julia, Python, MPI and sometimes just elegant programming</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item" href="/">Home</a>
+
+    
+
+    
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="/about/">About</a>
+        
+      
+    
+      
+    
+
+    <a class="sidebar-nav-item" href="/archive/v1.0.0.zip">Download</a>
+    <a class="sidebar-nav-item" href="">GitHub project</a>
+    <span class="sidebar-nav-item">Currently v1.0.0</span>
+  </nav>
+
+  <div class="sidebar-item">
+    <p>
+      &copy; 2016. All rights reserved.
+    </p>
+  </div>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/" title="Home">Steinhagelvoll Blog</a>
+            <small>Scientific programming Blog</small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content">
+        <div class="post">
+  <h1 class="post-title">Julia parallelism benchmarking</h1>
+  <span class="post-date">27 Sep 2016</span>
+  <h1 id="motivation">Motivation</h1>
+
+<p>Yesterday I realized, that Julia ist fast, but not as fast at Fortran. Which I though is ok as long as I can compensate by scalling to a lot of hardware. So today I tried this. I compared Julias parallel for loops to OpenMP. I think if Julia wants to best the Python with C-speed than it has to keep up with OpenMP, which seems to be the gold standart for shared memory parallelism.</p>
+
+<h1 id="setup">Setup</h1>
+
+<p>I decided to build on yesterdays code and parallelize the loop that test all the numbers if they are prime. This is a quite tricky loop for parallelization, because it takes longer to test a big prime number than a small one and because primes are randomly distributed. If the parallelization is done by just cutting the range into equal parts:</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>P1: 1,2,3
+P2: 4,5,6
+P3: 7,8,9
+....
+</code></pre>
+</div>
+<p>The first chunk will be processed a long time before the last one is done. If on the otherhand we choose an interleaving distribution:</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>P1: 1,5,9...
+P2: 2,6,10...
+P3: 3,7,11...
+P4: 4,8,12..
+</code></pre>
+</div>
+<p>we would also get a bad speedup, because process 1 always get smaller numbers than process 4. This is why we need a dynamic distribution, which hands out the work at processes free up. I compared three thing:</p>
+<ul>
+  <li>Fortran with dynamic scheduling</li>
+  <li>Fortran with static  scheduling</li>
+  <li>Julia parallelism</li>
+</ul>
+
+<p>I will attach the code at the end.
+https://steinhagelvoll.github.io/
+<img src="https://steinhagelvoll.github.io//_images/julia_speedup.png" alt="alt text" title="Logo Title Text 1" /></p>
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2016/09/26/julia-benchmark/">
+            Julia benchmarking
+            <small>26 Sep 2016</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script>
+      (function(document) {
+        var toggle = document.querySelector('.sidebar-toggle');
+        var sidebar = document.querySelector('#sidebar');
+        var checkbox = document.querySelector('#sidebar-checkbox');
+
+        document.addEventListener('click', function(e) {
+          var target = e.target;
+
+          if(!checkbox.checked ||
+             sidebar.contains(target) ||
+             (target === checkbox || target === toggle)) return;
+
+          checkbox.checked = false;
+        }, false);
+      })(document);
+    </script>
+  </body>
+</html>

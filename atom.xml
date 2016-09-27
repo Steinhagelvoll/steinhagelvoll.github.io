@@ -4,13 +4,51 @@
  <title>Steinhagelvoll Blog</title>
  <link href="https://steinhagelvoll.github.io//atom.xml" rel="self"/>
  <link href="https://steinhagelvoll.github.io//"/>
- <updated>2016-09-27T00:24:17+02:00</updated>
+ <updated>2016-09-27T23:54:30+02:00</updated>
  <id>https://steinhagelvoll.github.io/</id>
  <author>
    <name>Matthias Redies</name>
    <email>matthias.redies@posteo.de</email>
  </author>
 
+ 
+ <entry>
+   <title>Julia parallelism benchmarking</title>
+   <link href="https://steinhagelvoll.github.io//2016/09/27/julia-parallelism-benchmark/"/>
+   <updated>2016-09-27T00:00:00+02:00</updated>
+   <id>https://steinhagelvoll.github.io//2016/09/27/julia-parallelism-benchmark</id>
+   <content type="html">&lt;h1 id=&quot;motivation&quot;&gt;Motivation&lt;/h1&gt;
+
+&lt;p&gt;Yesterday I realized, that Julia ist fast, but not as fast at Fortran. Which I though is ok as long as I can compensate by scalling to a lot of hardware. So today I tried this. I compared Julias parallel for loops to OpenMP. I think if Julia wants to best the Python with C-speed than it has to keep up with OpenMP, which seems to be the gold standart for shared memory parallelism.&lt;/p&gt;
+
+&lt;h1 id=&quot;setup&quot;&gt;Setup&lt;/h1&gt;
+
+&lt;p&gt;I decided to build on yesterdays code and parallelize the loop that test all the numbers if they are prime. This is a quite tricky loop for parallelization, because it takes longer to test a big prime number than a small one and because primes are randomly distributed. If the parallelization is done by just cutting the range into equal parts:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;P1: 1,2,3
+P2: 4,5,6
+P3: 7,8,9
+....
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;The first chunk will be processed a long time before the last one is done. If on the otherhand we choose an interleaving distribution:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;P1: 1,5,9...
+P2: 2,6,10...
+P3: 3,7,11...
+P4: 4,8,12..
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;we would also get a bad speedup, because process 1 always get smaller numbers than process 4. This is why we need a dynamic distribution, which hands out the work at processes free up. I compared three thing:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Fortran with dynamic scheduling&lt;/li&gt;
+  &lt;li&gt;Fortran with static  scheduling&lt;/li&gt;
+  &lt;li&gt;Julia parallelism&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;I will attach the code at the end.
+https://steinhagelvoll.github.io/
+&lt;img src=&quot;https://steinhagelvoll.github.io//_images/julia_speedup.png&quot; alt=&quot;alt text&quot; title=&quot;Logo Title Text 1&quot; /&gt;&lt;/p&gt;
+</content>
+ </entry>
  
  <entry>
    <title>Julia benchmarking</title>
