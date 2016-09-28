@@ -4,7 +4,7 @@
  <title>Steinhagelvoll Blog</title>
  <link href="https://steinhagelvoll.github.io//atom.xml" rel="self"/>
  <link href="https://steinhagelvoll.github.io//"/>
- <updated>2016-09-28T11:23:02+02:00</updated>
+ <updated>2016-09-28T11:25:26+02:00</updated>
  <id>https://steinhagelvoll.github.io/</id>
  <author>
    <name>Matthias Redies</name>
@@ -14,9 +14,9 @@
  
  <entry>
    <title>Debate review</title>
-   <link href="https://steinhagelvoll.github.io//2016/09/28/debate-review/"/>
+   <link href="https://steinhagelvoll.github.io//relative_permalinks"/>
    <updated>2016-09-28T00:00:00+02:00</updated>
-   <id>https://steinhagelvoll.github.io//2016/09/28/debate-review</id>
+   <id>https://steinhagelvoll.github.io//debate-review</id>
    <content type="html">&lt;h2 id=&quot;expectation&quot;&gt;Expectation&lt;/h2&gt;
 
 &lt;p&gt;During this presidential race there were two candidates with an almoste infinite amount of money: Hillary Clinton and Jeb Bush. After Trumps performance against Jeb Bush in the primary debates yesterdays debate promised to be at least an entertaining one. But it turned out to be much more. Considering that Hillary usually struggles with public apperances this debate had been a great chance for Donald Trump. But Hillary used her resources very wisely and revolutionized presidential debates.&lt;/p&gt;
@@ -44,9 +44,9 @@
  
  <entry>
    <title>Julia benchmarking</title>
-   <link href="https://steinhagelvoll.github.io//2016/09/26/julia-benchmark/"/>
+   <link href="https://steinhagelvoll.github.io//relative_permalinks"/>
    <updated>2016-09-26T00:00:00+02:00</updated>
-   <id>https://steinhagelvoll.github.io//2016/09/26/julia-benchmark</id>
+   <id>https://steinhagelvoll.github.io//julia-benchmark</id>
    <content type="html">&lt;p&gt;&lt;a href=&quot;# Results&quot;&gt;tl;dr -&amp;gt; results&lt;/a&gt;
 I don’t know why the link doesn’t work just scroll to the bottom.&lt;/p&gt;
 &lt;h1 id=&quot;motivation&quot;&gt;Motivation&lt;/h1&gt;
