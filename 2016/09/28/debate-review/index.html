@@ -11,7 +11,7 @@
 
   <title>
     
-      Julia parallelism benchmarking &middot; Steinhagelvoll Blog
+      Debate review &middot; Steinhagelvoll Blog
     
   </title>
 
@@ -93,38 +93,29 @@
 
       <div class="container content">
         <div class="post">
-  <h1 class="post-title">Julia parallelism benchmarking</h1>
-  <span class="post-date">27 Sep 2016</span>
-  <h1 id="motivation">Motivation</h1>
+  <h1 class="post-title">Debate review</h1>
+  <span class="post-date">28 Sep 2016</span>
+  <h2 id="expectation">Expectation</h2>
 
-<p>Yesterday I realized, that Julia ist fast, but not as fast at Fortran. Which I though is ok as long as I can compensate by scalling to a lot of hardware. So today I tried this. I compared Julias parallel for loops to OpenMP. I think if Julia wants to best the Python with C-speed than it has to keep up with OpenMP, which seems to be the gold standart for shared memory parallelism.</p>
+<p>During this presidential race there were two candidates with an almoste infinite amount of money: Hillary Clinton and Jeb Bush. After Trumps performance against Jeb Bush in the primary debates yesterdays debate promised to be at least an entertaining one. But it turned out to be much more. Considering that Hillary usually struggles with public apperances this debate had been a great chance for Donald Trump. But Hillary used her resources very wisely and revolutionized presidential debates.</p>
 
-<h1 id="setup">Setup</h1>
+<h2 id="the-revolution">The revolution</h2>
 
-<p>I decided to build on yesterdays code and parallelize the loop that test all the numbers if they are prime. This is a quite tricky loop for parallelization, because it takes longer to test a big prime number than a small one and because primes are randomly distributed. If the parallelization is done by just cutting the range into equal parts:</p>
-<div class="highlighter-rouge"><pre class="highlight"><code>P1: 1,2,3
-P2: 4,5,6
-P3: 7,8,9
-....
-</code></pre>
-</div>
-<p>The first chunk will be processed a long time before the last one is done. If on the otherhand we choose an interleaving distribution:</p>
-<div class="highlighter-rouge"><pre class="highlight"><code>P1: 1,5,9...
-P2: 2,6,10...
-P3: 3,7,11...
-P4: 4,8,12..
-</code></pre>
-</div>
-<p>we would also get a bad speedup, because process 1 always get smaller numbers than process 4. This is why we need a dynamic distribution, which hands out the work at processes free up. I compared three thing:</p>
-<ul>
-  <li>Fortran with dynamic scheduling</li>
-  <li>Fortran with static  scheduling</li>
-  <li>Julia parallelism</li>
-</ul>
+<p>At the beginning Hillary caught everyone by supprise and announced that you can use her website to fact check Donald Trump. Trump was completly lost. He looked like he’d walked on the stage and forgot to put on his pants.</p>
 
-<p>I will attach the code at the end.
-https://steinhagelvoll.github.io/
-<img src="https://steinhagelvoll.github.io//_images/julia_speedup.png" alt="alt text" title="Logo Title Text 1" /></p>
+<p>Turing the website into a fact checking site hat a number of advantages:</p>
+
+<ol>
+  <li>Hillary gets a chance to ask you for money</li>
+  <li>You can actually check the facts, which mostly agreed with Hillary</li>
+  <li>Reporters can find the facts referenced by Clinton much faster than Trumps. Take the chinese-climate-change-tweet for example. Before people had a chance to turn off the tv reports hat his tweet.</li>
+</ol>
+
+<p>So how did Clintons team do it? Did she have an army of researchers watching the debate? I don’t think so. She knew which facts had been prepared and she check off the list. Consider the Miss Piggy-incident: Last question and her best point. So she squeezes this point in even if it is off-topic. Later it turns out that she already had prepared  a youtube ad with the former miss universe.</p>
+
+<p>It is not very supprising that Hillary was prepared very well, but the interesting thing is that she managed to act very natural repeating the prepared clips. Trumps tactics were limited in interrupting Hillary in the hopes that she get annoyed and snaps at him. I don’t think Hillary scored with Trump supporters, but I believe she scored with independents.</p>
+
+<p>Even though I’m not a Hillary fan, I’m glad she won, becaus facts, science and reason won aswell.</p>
 
 </div>
 
